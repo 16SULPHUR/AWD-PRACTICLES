@@ -1,0 +1,107 @@
+<!-- Practicle 6: Take input from user through prompt box and store it in an array. Print the Uibonacci series till the indexed number in the array. [Hint: Use Iterative Methods of array]
+
+Name: Ankit Patil
+Enrollment No: 202203103510124 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fibonacci Series</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7;
+    }
+
+    .container {
+      width: 80%;
+      margin: 20px auto;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .info {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .info p {
+      margin: 5px 0;
+      color: #666;
+    }
+
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #result {
+      margin-top: 20px;
+    }
+
+    #result p {
+      font-size: 16px;
+      color: #333;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="info">
+      <p>Name: Ankit Patil</p>
+      <p>Enrollment No: 202203103510124</p>
+    </div>
+    <h2>Generate Fibonacci Series</h2>
+    <button onclick="generateSeries()">Generate Series</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function generateFibonacci(n) {
+      let fibArray = [0, 1];
+      for (let i = 2; i <= n; i++) {
+          fibArray.push(fibArray[i - 1] + fibArray[i - 2]);
+      }
+      return fibArray;
+    }
+
+    function generateSeries() {
+      let input = prompt("Enter numbers separated by commas:");
+      if (!input) return;
+      let inputArray = input.split(",").map(Number);
+      let resultDiv = document.getElementById("result");
+
+      resultDiv.innerHTML = "";
+
+      for (let i = 0; i < inputArray.length; i++) {
+          let index = inputArray[i];
+          let fibonacciSeries = generateFibonacci(index);
+          resultDiv.innerHTML += "<p><b>Fibonacci series up to index " + index + ":</b> " + fibonacciSeries.join(", ") + "</b>";
+      }
+    }
+  </script>
+</body>
+</html>

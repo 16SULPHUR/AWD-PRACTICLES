@@ -1,0 +1,113 @@
+<!-- Practicle 5: Create a regular expression to find pattern from the given text as follow: 1) All the words starting with 'A'. 2) All the words starting with consonants. [Bonus Program: Upload a file using PHP and find above mentioned patters using JavaScript RE only from the text present in the file. ]
+
+Name: Ankit Patil
+Enrollment No: 202203103510124 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practical 5</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7;
+    }
+
+    .container {
+      width: 80%;
+      margin: 20px auto;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    p {
+      text-align: center;
+      color: #666;
+    }
+
+    .info {
+      margin-bottom: 20px;
+    }
+
+    .info p {
+      margin: 5px 0;
+    }
+
+    input[type="file"] {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    input[type="file"]:hover {
+      background-color: #0056b3;
+    }
+
+    #output {
+      margin-top: 20px;
+    }
+
+    #output p {
+      font-size: 18px;
+      color: #333;
+    }
+
+    .highlight {
+      color: #007bff;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Find Words in File</h1>
+    <div class="info">
+      <p>Name: Ankit Patil</p>
+      <p>Enrollment No: 202203103510124</p>
+    </div>
+    <p>Select a text file to find words starting with 'A' or consonants.</p>
+    <input type="file" id="fileInput" accept=".txt">
+    <div id="output"></div>
+  </div>
+
+  <script>
+    document.getElementById("fileInput").addEventListener("change", function (event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        const content = e.target.result;
+        const pattern1 = /\bA\w*\b/g;
+        const pattern2 =/\b(?![aeiouAEIOU])[a-zA-Z]+/g;
+
+        const matches1 = content.match(pattern1);
+        const matches2 = content.match(pattern2);
+
+        document.getElementById("output").innerHTML = `
+          <p><strong>Words starting with 'A':</strong> ${matches1 ? matches1.map(word => `<span class="highlight">${word}</span>`).join(", ") : 'None'}</p>
+          <p><strong>Words starting with consonants:</strong> ${matches2 ? matches2.map(word => `<span class="highlight">${word}</span>`).join(", ") : 'None'}</p>
+        `;
+      };
+
+      reader.readAsText(file);
+    });
+  </script>
+</body>
+</html>

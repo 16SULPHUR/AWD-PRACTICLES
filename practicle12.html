@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tip Calculator</title>
+    <style>
+      /* Google Font Import */
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+      /* Reset Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Montserrat", sans-serif;
+        background-color: #ffffff;
+        color: #ffc107;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 1rem;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        color: #ffc107;
+        text-align: center;
+        margin-bottom: 2rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 400px;
+      }
+
+      label {
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        text-align: left;
+        width: 100%;
+      }
+
+      input[type="number"],
+      button {
+        padding: 0.5rem;
+        font-size: 1rem;
+        border-radius: 0.25rem;
+        border: 1px solid #ccc;
+        margin-bottom: 1rem;
+        background-color: #ffffff;
+        color: #010100;
+        width: 100%;
+      }
+
+      input[type="number"]:focus {
+        outline: none;
+        border-color: #ffc107;
+        box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
+      }
+
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      .slider-container {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+
+      input[type="range"] {
+        width: 100%;
+        margin-right: 1rem;
+        accent-color: #ffc107; /* Change slider color to yellow */
+      }
+
+      .slider-value {
+        font-size: 1rem;
+        font-weight: 700;
+      }
+
+      button {
+        background-color: #ffc107;
+        color: #1a1a1a;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #e0a800;
+      }
+
+      #tipAmount {
+        font-size: 1.2rem;
+        font-weight: 700;
+        text-align: center;
+        margin-top: 2rem;
+        padding: 1rem;
+        background-color: #ffffff;
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+      }
+
+      /* Media Queries */
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>202203103510124<br />Ankit Patil</h1>
+    <h1>Tip Calculator</h1>
+    <form>
+      <label for="bill">Total Bill Amount :</label>
+      <input type="number" id="bill" placeholder="Enter bill amount" />
+      <label for="people">No. of People :</label>
+      <input
+        type="number"
+        id="people"
+        placeholder="Enter number of people"
+        min="1"
+      />
+      <label for="ratings">Your Ratings (Out of 5) :</label>
+      <div class="slider-container">
+        <input
+          type="range"
+          id="ratings"
+          min="1"
+          max="5"
+          value="3"
+          oninput="updateSliderValue()"
+        />
+        <span class="slider-value" id="sliderValue">3</span>
+      </div>
+      <button type="button" onclick="calculateTip()">Calculate Tip</button>
+    </form>
+    <div id="tipAmount"></div>
+    <script>
+      function calculateTip() {
+        let bill = parseFloat(document.getElementById("bill").value);
+        let people = parseInt(document.getElementById("people").value);
+        let ratings = parseFloat(document.getElementById("ratings").value);
+        if (isNaN(bill) || isNaN(people)) {
+          document.getElementById("tipAmount").innerText =
+            "Please enter valid inputs.";
+          return;
+        }
+        if (bill <= 0 || people <= 0) {
+          document.getElementById("tipAmount").innerText =
+            "Please enter valid inputs.";
+          return;
+        }
+        let tipPercentage = getTipPercentage(ratings);
+        let totalTip = bill * (tipPercentage / 100);
+        let tipPerPerson = totalTip / people;
+        document.getElementById("tipAmount").innerText =
+          "Total Tip: $" +
+          totalTip.toFixed(2) +
+          " (Tip/Person: $" +
+          tipPerPerson.toFixed(2) +
+          ")";
+      }
+
+      function getTipPercentage(ratings) {
+        if (ratings <= 2) {
+          return 5;
+        } else if (ratings <= 3) {
+          return 10;
+        } else if (ratings <= 4) {
+          return 15;
+        } else {
+          return 20;
+        }
+      }
+
+      function updateSliderValue() {
+        let sliderValue = document.getElementById("ratings").value;
+        document.getElementById("sliderValue").textContent = sliderValue;
+      }
+    </script>
+  </body>
+</html>
